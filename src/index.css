@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Remove default outlines from stickers */
+img {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Remove focus outlines from sticker containers */
+[class*="cursor-move"] {
+  outline: none !important;
+  border: none !important;
+}
+
+[class*="cursor-move"]:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+[class*="cursor-move"]:focus-visible {
+  outline: none !important;
+  border: none !important;
+}
+
