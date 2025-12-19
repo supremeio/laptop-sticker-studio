@@ -236,12 +236,15 @@ export default function LaptopStickerStudio() {
   }
 
   const handleDownload = async () => {
-    if (!exportRef.current || !laptopRect) return
+    if (!containerRef.current) return
     try {
-      const dataUrl = await toPng(exportRef.current, {
+      const dataUrl = await toPng(containerRef.current, {
         cacheBust: true,
         backgroundColor: '#f5f5f5',
         pixelRatio: 2,
+        filter: (node) => {
+          return !node.classList?.contains('export-exclude')
+        },
       })
       const link = document.createElement('a')
       link.download = 'laptop-sticker-design.png'
@@ -326,7 +329,7 @@ export default function LaptopStickerStudio() {
               )}
             </div>
           </div>
-          <div className="content-stretch flex gap-[13px] items-start justify-center relative shrink-0">
+          <div className="content-stretch flex gap-[13px] items-start justify-center relative shrink-0 export-exclude">
             <button
               onClick={handleUploadClick}
               className="bg-[#f5f5f5] border border-[#c6ccd0] border-solid flex gap-[4px] items-center justify-center px-[24px] py-[16px] relative rounded-[8px] shrink-0 hover:bg-[#e5e5e5] transition-colors cursor-pointer w-[220px]"
@@ -388,120 +391,6 @@ export default function LaptopStickerStudio() {
           </div>
         </div>
       </div>
-    {laptopRect && (
-      <div className="absolute left-[-99999px] top-[-99999px]">
-        <div
-          ref={exportRef}
-          className="bg-[#f5f5f5] flex flex-col items-center pb-0 pt-[60px] px-0 relative w-full h-screen overflow-hidden"
-          style={{
-            width: containerRef.current ? `${containerRef.current.offsetWidth}px` : `${window.innerWidth}px`,
-            height: containerRef.current ? `${containerRef.current.offsetHeight}px` : `${window.innerHeight}px`,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.1'%3E%3Cpath d='M20 20 L30 10 L40 20 L35 30 L25 30 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Ccircle cx='70' cy='30' r='8' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Crect x='15' y='60' width='20' height='20' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M50 70 Q55 60 60 70 T70 70' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M80 50 L85 45 L90 50 L87 55 L83 55 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-          }}
-        >
-          {/* Match the exact structure from visible view */}
-          <div className="flex flex-col gap-[14px] items-center relative shrink-0 w-[597px]">
-            <div className="flex flex-col gap-[24px] items-center relative shrink-0 w-full">
-              <div className="flex flex-col items-center leading-[1.4] relative shrink-0 w-full whitespace-pre-wrap">
-                <p className="font-['Figtree',sans-serif] font-extrabold relative shrink-0 text-[#110D37] text-[64px] leading-[140%] tracking-[-1.92px] w-full">
-                  Laptop sticker studio
-                </p>
-                <p className="font-['Figtree',sans-serif] font-semibold relative shrink-0 text-[#5D5A72] text-[20px] text-center leading-[140%] tracking-[-0.6px] w-full">
-                  Design your perfect laptop with custom stickers
-                </p>
-              </div>
-              <div className="bg-[#f5f5f5] content-stretch flex gap-[2px] items-center p-[2px] relative rounded-[8px] shrink-0">
-                <button
-                  className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[6px] shrink-0 transition-colors ${
-                    activeTab === 'macbook'
-                      ? 'bg-[#110d37]'
-                      : 'bg-[#f5f5f5]'
-                  }`}
-                >
-                  <p
-                    className={`font-['Figtree',sans-serif] font-medium leading-[20px] relative shrink-0 text-[14px] ${
-                      activeTab === 'macbook' ? 'text-white' : 'text-black'
-                    }`}
-                  >
-                    Macbook
-                  </p>
-                </button>
-                <button
-                  className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[8px] shrink-0 transition-colors ${
-                    activeTab === 'others'
-                      ? 'bg-[#110d37]'
-                      : 'bg-[#f5f5f5]'
-                  }`}
-                >
-                  <p
-                    className={`font-['Figtree',sans-serif] font-medium leading-[20px] relative shrink-0 text-[14px] ${
-                      activeTab === 'others' ? 'text-white' : 'text-black'
-                    }`}
-                  >
-                    Others
-                  </p>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="content-stretch flex flex-col gap-[13px] items-center relative shrink-0 w-[335px]">
-            <div className="h-[400px] relative shrink-0 w-[558px]">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {imageErrors.has(imgMainImage) ? (
-                  <div className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%] bg-gray-200 flex items-center justify-center">
-                    <p className="text-gray-500 text-sm">Laptop image</p>
-                  </div>
-                ) : (
-                <img
-                  alt="Laptop"
-                  className="w-full h-full object-contain"
-                  src={imgMainImage}
-                />
-                )}
-              </div>
-            </div>
-          </div>
-          {/* Stickers container - must match visible structure exactly */}
-          <div className="absolute inset-0 z-10 pointer-events-none">
-            <div className="relative size-full">
-              {stickers.map((sticker) => {
-                const offset = getStickerOffset(sticker.id)
-                
-                return (
-                  <div
-                    key={`export-${sticker.id}`}
-                    className="absolute cursor-move pointer-events-auto"
-                    style={{
-                      width: `${sticker.size.width}px`,
-                      height: `${sticker.size.height}px`,
-                      transform: `translate(${sticker.position.x}px, ${sticker.position.y}px) rotate(${sticker.rotation}deg)`,
-                      outline: 'none',
-                      border: 'none',
-                      ...(offset.left && { left: offset.left }),
-                      ...(offset.top && { top: offset.top }),
-                    }}
-                  >
-                    {imageErrors.has(sticker.src) ? (
-                      <div className="absolute inset-0 bg-gray-300 flex items-center justify-center border-2 border-dashed border-gray-400">
-                        <p className="text-gray-600 text-xs text-center px-2">Sticker</p>
-                      </div>
-                    ) : (
-                      <img
-                        alt="Sticker"
-                        className="absolute inset-0 max-w-none object-cover object-center pointer-events-none size-full"
-                        style={{ outline: 'none', border: 'none' }}
-                        src={sticker.src}
-                      />
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
       <div 
         className="absolute inset-0 z-10 pointer-events-none"
         onClick={() => setSelectedId(null)}
@@ -557,7 +446,7 @@ export default function LaptopStickerStudio() {
           })}
           
           <Moveable
-            className="pointer-events-auto"
+            className="pointer-events-auto export-exclude"
             style={{ pointerEvents: selectedId ? 'auto' : 'none' }}
             target={selectedId ? targetRefs.current[selectedId] : null}
             draggable={true}
