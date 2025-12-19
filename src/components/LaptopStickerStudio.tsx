@@ -315,7 +315,7 @@ export default function LaptopStickerStudio() {
               ) : (
                 <img
                   alt="Laptop"
-                  className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%]"
+                  className="w-full h-full object-contain pointer-events-none"
                   src={imgMainImage}
                   loading="eager"
                   fetchPriority="high"
@@ -419,11 +419,11 @@ export default function LaptopStickerStudio() {
                     <p className="text-gray-500 text-sm">Laptop image</p>
                   </div>
                 ) : (
-                  <img
-                    alt="Laptop"
-                    className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%]"
-                    src={imgMainImage}
-                  />
+                <img
+                  alt="Laptop"
+                  className="w-full h-full object-contain"
+                  src={imgMainImage}
+                />
                 )}
               </div>
             </div>
