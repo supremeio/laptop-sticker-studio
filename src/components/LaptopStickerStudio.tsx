@@ -3,7 +3,9 @@ import { toPng } from 'html-to-image'
 import Moveable from 'react-moveable'
 
 // Image assets from Figma
-const imgMainImage = 'https://www.figma.com/api/mcp/asset/c855e5a4-ce34-4ccb-89f2-6dd62878cf72'
+// TODO: Update imgMainImage with the new asset URL from Figma after image replacement
+// The new asset URL can be obtained from Figma design context or by inspecting the image element
+const imgMainImage = 'https://www.figma.com/api/mcp/asset/c855e5a4-ce34-4ccb-89f2-6dd62878cf72' // OLD - needs update
 const imgStickerImage = 'https://www.figma.com/api/mcp/asset/63893630-ad44-4243-b1f2-2efa23587ff0'
 const imgStickerImage1 = 'https://www.figma.com/api/mcp/asset/76026186-ea79-4680-a42a-63a3180d4f20'
 const imgStickerImage2 = 'https://www.figma.com/api/mcp/asset/d12ae34c-dad1-402a-8999-1c048fe3c6ec'
@@ -41,6 +43,16 @@ const parseTransform = (transform: string): { x: number; y: number; rotation: nu
   const rotation = rotateMatch ? parseFloat(rotateMatch[1]) : 0
   
   return { x, y, rotation }
+}
+
+// Helper function to get sticker-specific offsets
+const getStickerOffset = (id: string) => {
+  if (id === '3') return { left: '-35px', top: '33px' }
+  if (id === '7') return { left: '13px', top: '35px' }
+  if (id === '9') return { left: '111px', top: '25px' }
+  if (id === '12') return { left: '31px', top: '104px' }
+  if (id === '13') return { left: undefined, top: '39px' }
+  return { left: undefined, top: undefined }
 }
 
 // Default sticker positions from Figma design
@@ -225,10 +237,12 @@ export default function LaptopStickerStudio() {
   }
 
   const handleDownload = async () => {
-    if (!exportRef.current) return
+    if (!exportRef.current || !laptopRect) return
     try {
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
+        backgroundColor: '#f5f5f5',
+        pixelRatio: 2,
       })
       const link = document.createElement('a')
       link.download = 'laptop-sticker-design.png'
@@ -378,54 +392,80 @@ export default function LaptopStickerStudio() {
       <div className="absolute left-[-99999px] top-[-99999px]">
         <div
           ref={exportRef}
-          className="relative"
+          className="bg-[#f5f5f5] flex flex-col items-center pb-0 pt-[60px] px-0 relative w-full h-screen overflow-hidden"
           style={{
-            width: `${laptopRect.width}px`,
-            height: `${laptopRect.height}px`,
-            overflow: 'hidden',
+            width: `${window.innerWidth}px`,
+            height: `${window.innerHeight}px`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.1'%3E%3Cpath d='M20 20 L30 10 L40 20 L35 30 L25 30 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Ccircle cx='70' cy='30' r='8' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Crect x='15' y='60' width='20' height='20' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M50 70 Q55 60 60 70 T70 70' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M80 50 L85 45 L90 50 L87 55 L83 55 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
           }}
         >
-          <div className="absolute inset-0 overflow-hidden">
-            {imageErrors.has(imgMainImage) ? (
-              <div className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%] bg-gray-200 flex items-center justify-center">
-                <p className="text-gray-500 text-sm">Laptop image</p>
+          {/* Match the exact structure from visible view */}
+          <div className="flex flex-col gap-[14px] items-center relative shrink-0 w-[597px]">
+            <div className="flex flex-col gap-[24px] items-center relative shrink-0 w-full">
+              <div className="flex flex-col items-center leading-[1.4] relative shrink-0 w-full whitespace-pre-wrap">
+                <p className="font-['Figtree',sans-serif] font-extrabold relative shrink-0 text-[#110D37] text-[64px] leading-[140%] tracking-[-1.92px] w-full">
+                  Laptop sticker studio
+                </p>
+                <p className="font-['Figtree',sans-serif] font-semibold relative shrink-0 text-[#5D5A72] text-[20px] text-center leading-[140%] tracking-[-0.6px] w-full">
+                  Design your perfect laptop with custom stickers
+                </p>
               </div>
-            ) : (
-              <img
-                alt="Laptop"
-                className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%]"
-                src={imgMainImage}
-              />
-            )}
+            </div>
           </div>
-          <div className="absolute inset-0 pointer-events-none">
-            {stickers.map((sticker) => {
-              const x = sticker.position.x - (laptopRect?.left ?? 0)
-              const y = sticker.position.y - (laptopRect?.top ?? 0)
-              return (
-                <div
-                  key={`export-${sticker.id}`}
-                  className="absolute"
-                  style={{
-                    width: `${sticker.size.width}px`,
-                    height: `${sticker.size.height}px`,
-                    transform: `translate(${x}px, ${y}px) rotate(${sticker.rotation}deg)`,
-                  }}
-                >
-                  {imageErrors.has(sticker.src) ? (
-                    <div className="absolute inset-0 bg-gray-300 flex items-center justify-center border-2 border-dashed border-gray-400">
-                      <p className="text-gray-600 text-xs text-center px-2">Sticker</p>
-                    </div>
-                  ) : (
-                    <img
-                      alt="Sticker"
-                      className="absolute inset-0 max-w-none object-cover object-center pointer-events-none size-full"
-                      src={sticker.src}
-                    />
-                  )}
-                </div>
-              )
-            })}
+          <div className="content-stretch flex flex-col gap-[13px] items-center relative shrink-0 w-[335px]">
+            <div className="h-[400px] relative shrink-0 w-[558px]">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {imageErrors.has(imgMainImage) ? (
+                  <div className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%] bg-gray-200 flex items-center justify-center">
+                    <p className="text-gray-500 text-sm">Laptop image</p>
+                  </div>
+                ) : (
+                  <img
+                    alt="Laptop"
+                    className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%]"
+                    src={imgMainImage}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          {/* Stickers container - must match visible structure exactly */}
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            <div className="relative size-full">
+              {stickers.map((sticker) => {
+                const offset = getStickerOffset(sticker.id)
+                
+                return (
+                  <div
+                    key={`export-${sticker.id}`}
+                    className="absolute cursor-move pointer-events-auto"
+                    style={{
+                      width: `${sticker.size.width}px`,
+                      height: `${sticker.size.height}px`,
+                      transform: `translate(${sticker.position.x}px, ${sticker.position.y}px) rotate(${sticker.rotation}deg)`,
+                      outline: 'none',
+                      border: 'none',
+                      ...(offset.left && { left: offset.left }),
+                      ...(offset.top && { top: offset.top }),
+                    }}
+                  >
+                    {imageErrors.has(sticker.src) ? (
+                      <div className="absolute inset-0 bg-gray-300 flex items-center justify-center border-2 border-dashed border-gray-400">
+                        <p className="text-gray-600 text-xs text-center px-2">Sticker</p>
+                      </div>
+                    ) : (
+                      <img
+                        alt="Sticker"
+                        className="absolute inset-0 max-w-none object-cover object-center pointer-events-none size-full"
+                        style={{ outline: 'none', border: 'none' }}
+                        src={sticker.src}
+                      />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -443,15 +483,6 @@ export default function LaptopStickerStudio() {
           }}
         >
           {stickers.map((sticker) => {
-            // Apply specific left/top offsets for certain stickers
-            const getStickerOffset = (id: string) => {
-              if (id === '3') return { left: '-35px', top: '33px' }
-              if (id === '7') return { left: '13px', top: '35px' }
-              if (id === '9') return { left: '111px', top: '25px' }
-              if (id === '12') return { left: '31px', top: '104px' }
-              if (id === '13') return { left: undefined, top: '39px' }
-              return { left: undefined, top: undefined }
-            }
             const offset = getStickerOffset(sticker.id)
             
             return (
