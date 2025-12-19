@@ -276,13 +276,13 @@ export default function LaptopStickerStudio() {
               Design your perfect laptop with custom stickers
             </p>
           </div>
-          <div className="bg-[#f5f5f5] content-stretch flex gap-[2px] items-center p-[2px] relative rounded-[8px] shrink-0">
+          <div className="bg-[#DEDFE2] content-stretch flex gap-[2px] items-center p-[2px] relative rounded-[8px] shrink-0">
             <button
               onClick={() => handleTabClick('macbook')}
               className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[6px] shrink-0 transition-colors ${
                 activeTab === 'macbook'
                   ? 'bg-[#110d37]'
-                  : 'bg-[#f5f5f5] hover:bg-[#e5e5e5]'
+                  : 'bg-[#DEDFE2] hover:bg-[#e5e5e5]'
               }`}
             >
               <p
@@ -298,7 +298,7 @@ export default function LaptopStickerStudio() {
               className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[8px] shrink-0 transition-colors ${
                 activeTab === 'others'
                   ? 'bg-[#110d37]'
-                  : 'bg-[#f5f5f5] hover:bg-[#e5e5e5]'
+                  : 'bg-[#DEDFE2] hover:bg-[#e5e5e5]'
               }`}
             >
               <p
