@@ -164,7 +164,6 @@ export default function LaptopStickerStudio() {
   const targetRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const laptopRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const exportRef = useRef<HTMLDivElement>(null)
   const [laptopRect, setLaptopRect] = useState<DOMRect | null>(null)
 
   useEffect(() => {
@@ -236,12 +235,27 @@ export default function LaptopStickerStudio() {
   }
 
   const handleDownload = async () => {
-    if (!containerRef.current) return
+    if (!containerRef.current || !laptopRef.current) return
     try {
+      const rootRect = containerRef.current.getBoundingClientRect()
+      const laptopRect = laptopRef.current.getBoundingClientRect()
+      const left = laptopRect.left - rootRect.left
+      const top = laptopRect.top - rootRect.top
+      const width = laptopRect.width
+      const height = laptopRect.height
+
       const dataUrl = await toPng(containerRef.current, {
         cacheBust: true,
         backgroundColor: '#f5f5f5',
         pixelRatio: 2,
+        width: width,
+        height: height,
+        style: {
+          transform: `translate(${-left}px, ${-top}px)`,
+          transformOrigin: 'top left',
+          width: `${rootRect.width}px`,
+          height: `${rootRect.height}px`,
+        },
         filter: (node) => {
           return !node.classList?.contains('export-exclude')
         },
@@ -251,7 +265,7 @@ export default function LaptopStickerStudio() {
       link.href = dataUrl
       link.click()
     } catch (error) {
-      // Silently fail - user can try again
+      console.error('Download failed:', error)
     }
   }
 
