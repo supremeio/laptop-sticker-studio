@@ -3,7 +3,7 @@ import { toPng } from 'html-to-image'
 import Moveable from 'react-moveable'
 
 // Image assets from Figma
-const imgMainImage = '/assets/Laptop image.png'
+const imgMainImage = '/assets/laptop-image.png'
 const imgStickerImage = 'https://www.figma.com/api/mcp/asset/63893630-ad44-4243-b1f2-2efa23587ff0'
 const imgStickerImage1 = 'https://www.figma.com/api/mcp/asset/76026186-ea79-4680-a42a-63a3180d4f20'
 const imgStickerImage2 = 'https://www.figma.com/api/mcp/asset/d12ae34c-dad1-402a-8999-1c048fe3c6ec'
@@ -319,14 +319,15 @@ export default function LaptopStickerStudio() {
                   <p className="text-gray-500 text-sm">Laptop image</p>
                 </div>
               ) : (
-                <img
-                  alt="Laptop"
-                  className="w-full h-full object-contain pointer-events-none"
-                  src={imgMainImage}
-                  loading="eager"
-                  fetchPriority="high"
-                  onError={() => handleImageError(imgMainImage)}
-                />
+                  <img
+                    alt="Laptop"
+                    crossOrigin="anonymous"
+                    className="w-full h-full object-contain pointer-events-none"
+                    src={imgMainImage}
+                    loading="eager"
+                    fetchPriority="high"
+                    onError={() => handleImageError(imgMainImage)}
+                  />
               )}
             </div>
           </div>
