@@ -411,6 +411,38 @@ export default function LaptopStickerStudio() {
                   Design your perfect laptop with custom stickers
                 </p>
               </div>
+              <div className="bg-[#f5f5f5] content-stretch flex gap-[2px] items-center p-[2px] relative rounded-[8px] shrink-0">
+                <button
+                  className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[6px] shrink-0 transition-colors ${
+                    activeTab === 'macbook'
+                      ? 'bg-[#110d37]'
+                      : 'bg-[#f5f5f5]'
+                  }`}
+                >
+                  <p
+                    className={`font-['Figtree',sans-serif] font-medium leading-[20px] relative shrink-0 text-[14px] ${
+                      activeTab === 'macbook' ? 'text-white' : 'text-black'
+                    }`}
+                  >
+                    Macbook
+                  </p>
+                </button>
+                <button
+                  className={`content-stretch flex items-center justify-center px-[8px] py-[4px] relative rounded-[8px] shrink-0 transition-colors ${
+                    activeTab === 'others'
+                      ? 'bg-[#110d37]'
+                      : 'bg-[#f5f5f5]'
+                  }`}
+                >
+                  <p
+                    className={`font-['Figtree',sans-serif] font-medium leading-[20px] relative shrink-0 text-[14px] ${
+                      activeTab === 'others' ? 'text-white' : 'text-black'
+                    }`}
+                  >
+                    Others
+                  </p>
+                </button>
+              </div>
             </div>
           </div>
           <div className="content-stretch flex flex-col gap-[13px] items-center relative shrink-0 w-[335px]">
