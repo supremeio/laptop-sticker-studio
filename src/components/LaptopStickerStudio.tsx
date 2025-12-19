@@ -164,19 +164,6 @@ export default function LaptopStickerStudio() {
   const targetRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const laptopRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [laptopRect, setLaptopRect] = useState<DOMRect | null>(null)
-
-  useEffect(() => {
-    const updateRect = () => {
-      if (laptopRef.current) {
-        setLaptopRect(laptopRef.current.getBoundingClientRect())
-      }
-    }
-    updateRect()
-    window.addEventListener('resize', updateRect)
-    return () => window.removeEventListener('resize', updateRect)
-  }, [])
-
   // Preload critical images
   useEffect(() => {
     const criticalImages = [imgMainImage, imgUploadIcon, imgDownloadIcon1, imgDownloadIcon2]
