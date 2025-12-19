@@ -3,9 +3,7 @@ import { toPng } from 'html-to-image'
 import Moveable from 'react-moveable'
 
 // Image assets from Figma
-// TODO: Update imgMainImage with the new asset URL from Figma after image replacement
-// The new asset URL can be obtained from Figma design context or by inspecting the image element
-const imgMainImage = 'https://www.figma.com/api/mcp/asset/c855e5a4-ce34-4ccb-89f2-6dd62878cf72' // OLD - needs update
+const imgMainImage = '/assets/Laptop image.png'
 const imgStickerImage = 'https://www.figma.com/api/mcp/asset/63893630-ad44-4243-b1f2-2efa23587ff0'
 const imgStickerImage1 = 'https://www.figma.com/api/mcp/asset/76026186-ea79-4680-a42a-63a3180d4f20'
 const imgStickerImage2 = 'https://www.figma.com/api/mcp/asset/d12ae34c-dad1-402a-8999-1c048fe3c6ec'
