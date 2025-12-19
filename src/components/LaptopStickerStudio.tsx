@@ -163,6 +163,7 @@ export default function LaptopStickerStudio() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const targetRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const laptopRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const exportRef = useRef<HTMLDivElement>(null)
   const [laptopRect, setLaptopRect] = useState<DOMRect | null>(null)
 
@@ -253,6 +254,7 @@ export default function LaptopStickerStudio() {
 
   return (
     <div
+      ref={containerRef}
       className="bg-[#f5f5f5] flex flex-col items-center pb-0 pt-[60px] px-0 relative w-full h-screen overflow-hidden"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.1'%3E%3Cpath d='M20 20 L30 10 L40 20 L35 30 L25 30 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Ccircle cx='70' cy='30' r='8' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Crect x='15' y='60' width='20' height='20' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M50 70 Q55 60 60 70 T70 70' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M80 50 L85 45 L90 50 L87 55 L83 55 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E")`,
@@ -392,8 +394,8 @@ export default function LaptopStickerStudio() {
           ref={exportRef}
           className="bg-[#f5f5f5] flex flex-col items-center pb-0 pt-[60px] px-0 relative w-full h-screen overflow-hidden"
           style={{
-            width: `${window.innerWidth}px`,
-            height: `${window.innerHeight}px`,
+            width: containerRef.current ? `${containerRef.current.offsetWidth}px` : `${window.innerWidth}px`,
+            height: containerRef.current ? `${containerRef.current.offsetHeight}px` : `${window.innerHeight}px`,
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.1'%3E%3Cpath d='M20 20 L30 10 L40 20 L35 30 L25 30 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Ccircle cx='70' cy='30' r='8' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Crect x='15' y='60' width='20' height='20' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M50 70 Q55 60 60 70 T70 70' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3Cpath d='M80 50 L85 45 L90 50 L87 55 L83 55 Z' fill='none' stroke='%23110D37' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E")`,
             backgroundRepeat: 'repeat',
           }}
