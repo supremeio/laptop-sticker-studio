@@ -230,18 +230,23 @@ export default function LaptopStickerStudio() {
       const top = laptopRect.top - rootRect.top
       const width = laptopRect.width
       const height = laptopRect.height
+      const rootWidth = rootRect.width
+      const rootHeight = rootRect.height
+      const right = rootWidth - (left + width)
+      const bottom = rootHeight - (top + height)
 
       const dataUrl = await toPng(containerRef.current, {
         cacheBust: true,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#ffffff',
         pixelRatio: 2,
-        width: width,
-        height: height,
+        width: width + 24,
+        height: height + 24,
         style: {
-          transform: `translate(${-left}px, ${-top}px)`,
+          transform: `translate(${-left + 12}px, ${-top + 12}px)`,
           transformOrigin: 'top left',
           width: `${rootRect.width}px`,
           height: `${rootRect.height}px`,
+          clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px)`,
         },
         filter: (node) => {
           return !node.classList?.contains('export-exclude')
