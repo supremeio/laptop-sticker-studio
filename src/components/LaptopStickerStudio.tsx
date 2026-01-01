@@ -3,7 +3,7 @@ import { toPng } from 'html-to-image'
 import Moveable from 'react-moveable'
 
 // Image assets from Figma
-const imgMainImage = '/assets/laptop-image.png'
+const imgMainImage = '/assets/laptop-image-v2.png'
 const imgStickerImage = '/assets/sticker-1.png'
 const imgStickerImage1 = '/assets/sticker-2.png'
 const imgStickerImage2 = '/assets/sticker-3.png'
@@ -322,7 +322,7 @@ export default function LaptopStickerStudio() {
                   <img
                     alt="Laptop"
                     crossOrigin="anonymous"
-                    className="absolute h-[167.69%] left-[-27.29%] max-w-none top-[-33.84%] w-[154.59%] pointer-events-none"
+                    className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"
                     src={imgMainImage}
                     loading="eager"
                     fetchPriority="high"
