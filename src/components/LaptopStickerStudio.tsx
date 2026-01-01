@@ -3,7 +3,7 @@ import { toPng } from 'html-to-image'
 import Moveable from 'react-moveable'
 
 // Image assets from Figma
-const imgMainImage = '/assets/laptop-image-v2.png'
+const imgMainImage = '/assets/laptop-image-v3.png'
 const imgStickerImage = '/assets/sticker-1.png'
 const imgStickerImage1 = '/assets/sticker-2.png'
 const imgStickerImage2 = '/assets/sticker-3.png'
@@ -237,16 +237,16 @@ export default function LaptopStickerStudio() {
 
       const dataUrl = await toPng(containerRef.current, {
         cacheBust: true,
+        backgroundColor: '#ffffff',
         pixelRatio: 2,
         width: width + 24,
         height: height + 24,
         style: {
-          background: 'white',
           transform: `translate(${-left + 12}px, ${-top + 12}px)`,
           transformOrigin: 'top left',
           width: `${rootRect.width}px`,
           height: `${rootRect.height}px`,
-          clipPath: `inset(${top - 12}px ${right - 12}px ${bottom - 12}px ${left - 12}px round 20px)`,
+          clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px)`,
         },
         filter: (node) => {
           return !node.classList?.contains('export-exclude')
