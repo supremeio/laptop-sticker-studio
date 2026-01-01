@@ -239,7 +239,7 @@ export default function LaptopStickerStudio() {
         cacheBust: false, // Changed to false to speed up repeated downloads
         skipAutoScale: true, // Prevents unnecessary re-scaling work
         backgroundColor: '#ffffff',
-        pixelRatio: 2,
+        pixelRatio: 2, // High quality kept as requested
         width: width + 24,
         height: height + 24,
         style: {
