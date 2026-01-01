@@ -312,7 +312,7 @@ export default function LaptopStickerStudio() {
           </div>
         </div>
         <div className="content-stretch flex flex-col gap-[13px] items-center relative shrink-0 w-[335px]">
-          <div className="h-[400px] relative shrink-0 w-[558px]" ref={laptopRef}>
+          <div className="h-[400px] relative shrink-0 w-[565px]" ref={laptopRef}>
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               {imageErrors.has(imgMainImage) ? (
                 <div className="absolute h-[143.2%] left-[-16.77%] max-w-none top-[-21.6%] w-[133.53%] bg-gray-200 flex items-center justify-center">
@@ -322,7 +322,7 @@ export default function LaptopStickerStudio() {
                   <img
                     alt="Laptop"
                     crossOrigin="anonymous"
-                    className="w-full h-full object-contain pointer-events-none"
+                    className="absolute h-[167.69%] left-[-27.29%] max-w-none top-[-33.84%] w-[154.59%] pointer-events-none"
                     src={imgMainImage}
                     loading="eager"
                     fetchPriority="high"
