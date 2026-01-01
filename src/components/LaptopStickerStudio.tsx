@@ -236,7 +236,8 @@ export default function LaptopStickerStudio() {
       const bottom = rootHeight - (top + height)
 
       const dataUrl = await toPng(containerRef.current, {
-        cacheBust: true,
+        cacheBust: false, // Changed to false to speed up repeated downloads
+        skipAutoScale: true, // Prevents unnecessary re-scaling work
         backgroundColor: '#ffffff',
         pixelRatio: 2,
         width: width + 24,
@@ -249,6 +250,7 @@ export default function LaptopStickerStudio() {
           clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px)`,
         },
         filter: (node) => {
+          // Optimization: Skip processing for invisible/excluded nodes earlier
           return !node.classList?.contains('export-exclude')
         },
       })
