@@ -29,3 +29,5 @@ The app needs these images:
 - Upload icon (img)
 - Decorative icons (imgGroup, imgGroup1)
 
+
+
